@@ -2,7 +2,8 @@
 
   class Service{
     private $conn;
-    private $bill_table = "Bill";
+    private $billt_table = "BillT";
+    private $billp_table = "BillP";
     private $apt_table = "Service Appointment";
     private $parts = array();
     private $tests = array();
@@ -26,11 +27,9 @@
     {
       $query = "INSERT INTO `".$apt_table."` SET ScheduledDropOff='".$this->SDropOff."', AppMadeDate= current_date, CID='".$this->CID."', CarID='".$this->CarID."'";
       $stmt = $this->conn->prepare($query);
-      $result = $stmt->execute();
-      if(result)
-        return true;
-      else
-        return false;
+      $stmt->execute();
+      $this->AID = $this->conn->lastInsertId();
+      return true;
     }
     
   }

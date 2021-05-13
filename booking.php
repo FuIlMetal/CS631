@@ -11,13 +11,13 @@
   
   $database = new Database;
   $db = $database->getConnection();
+  $apt_table = "Service Appointment";
   
   $customer = new Customer($db);
   $car = new Car($db);
   $service = new Service($db);
   
   $_POST = json_decode(file_get_contents('php://input'), true);
-  
   $customer->fname = $_POST["fname"];
   $customer->lname = $_POST["lname"];
   $customer->email = $_POST["email"];
@@ -37,33 +37,52 @@
   }
 
   $CID = $customer->CID;
-  //create sale now with CID and VID
   
-  if($car->findCar())
+  $car->findCar();
+  $CarID = $car->CarID;
+  
+  //figure out pickup date
+  $query = "SELECT timestampdiff(year, current_date, dateOfPurchase) AS TimeDiff from Purchase WHERE CID = '".$CID."' AND CarID = '".$CarID."'";
+  echo $query;
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $time = $result['TimeDiff'];
+  
+  //figure out PID
+  if($time > 3)
+    $time = 3;
+    
+  $query = "SELECT PID from `Service Package` WHERE TimeSincePurchased = ".$time;
+  echo $query."\n";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $PID = $result['PID'];
+  
+  //figure out pickupp date
+  
+  
+  $query = "INSERT INTO `".$apt_table."` SET ScheduledDropOff='".$service->SDropOff."', AppMadeDate= current_date, CID='".$CID."', CarID='".$CarID."', PID = ".$PID;
+  echo $query;
+  $stmt = $db->prepare($query);
+  $result = $stmt->execute();
+  $AID = $db->lastInsertId();
+  
+  if(result)
   {
-    $query = "Insert into Purchase Set DateOfPurchase = current_date, CID = ".$CID.", CarID = ".$car->CarID.", SalePrice = ".$SalePrice;
-    $stmt = $db->prepare($query);
-    $result = $stmt->execute();
-    if(result)
-    {
       $user_arr = array(
-        "status" => "Successful Sale"
+        "status" => "Successful Appointment",
+        "AID" => $AID
         );
-    }
-    else
-    {
-      $user_arr = array(
-        "status" => "Unsuccessful Sale"
-        );
-    }
   }
   else
   {
-    $user_arr = array(
-        "status" => "Car does not exist"
+      $user_arr = array(
+        "status" => "Unsuccessful Appointment"
         );
   }
-   
+ 
   print_r(json_encode($user_arr, JSON_PRETTY_PRINT));
 
   
