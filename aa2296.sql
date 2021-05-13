@@ -119,9 +119,9 @@ CREATE TABLE IF NOT EXISTS `Purchase` (
 
 CREATE TABLE IF NOT EXISTS `Service Appointment` (
   `AID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `PickupDate` date NOT NULL,
-  `ActualDropoff` date DEFAULT NULL,
-  `ScheduledDropoff` date NOT NULL,
+  `PickupDate` datetime NOT NULL,
+  `ActualDropoff` datetime DEFAULT NULL,
+  `ScheduledDropoff` datetime NOT NULL,
   `AppMadeDate` date NOT NULL,
   `PID` int(10) NOT NULL,
   `CID` int(5) NOT NULL,
@@ -176,7 +176,8 @@ CREATE TABLE IF NOT EXISTS `PTask` (
 CREATE TABLE IF NOT EXISTS `Test` (
   `TestID` int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `TestName` varchar(30) NOT NULL,
-  `LabourCost` int(10) NOT NULL
+  `LabourCost` int(10) NOT NULL,
+  `Time` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;# MySQL returned an empty result set (i.e. zero rows).
 
 
@@ -338,9 +339,9 @@ INSERT INTO `Vehicle Type` (`Make`, `Model`, `Year`) VALUES
 -- Dumping data for table `Test`
 --
 
-INSERT INTO `Test` (`TestName`, `LabourCost`) VALUES
-('Braking System', 250),
-('tyre alignment', 200);# 2 rows affected.
+INSERT INTO `Test` (`TestName`, `LabourCost`, `Time`) VALUES
+('Braking System', 250, 2),
+('tyre alignment', 200, 1);# 2 rows affected.
 
 
 --
@@ -388,7 +389,7 @@ INSERT INTO `Service Package` (`PackageCost`, `TimeSincePurchased`) VALUES
 --
 
 INSERT INTO `Service Appointment` (`PickupDate`, `ActualDropoff`, `ScheduledDropoff`, `AppMadeDate`, `PID`, `CID`, `CarID`) VALUES
-('2021-02-15', '2021-02-05', '2021-02-05', '2021-02-02', 1, 1, 1);# 1 row affected.
+('2021-02-05 22:03:28', '2021-02-05 19:03:28', '2021-02-05 19:03:28', '2021-02-02', 1, 1, 1);# 1 row affected.
 
 
 --

@@ -7,7 +7,6 @@
   include_once './config/database.php';
   include_once './objects/customer.php';
   include_once './objects/car.php';
-  include_once './objects/service.php';
   
   $database = new Database;
   $db = $database->getConnection();
@@ -15,7 +14,6 @@
   
   $customer = new Customer($db);
   $car = new Car($db);
-  $service = new Service($db);
   
   $_POST = json_decode(file_get_contents('php://input'), true);
   $customer->fname = $_POST["fname"];
@@ -29,7 +27,7 @@
   $car->model = $_POST["model"];
   $car->year = $_POST["year"];
   
-  $service->SDropOff = $_POST["dropOff"];
+  $dropOff = $_POST["dropOff"];
   
   if(!$customer->checkIfExist())
   {
@@ -43,7 +41,6 @@
   
   //figure out pickup date
   $query = "SELECT timestampdiff(year, current_date, dateOfPurchase) AS TimeDiff from Purchase WHERE CID = '".$CID."' AND CarID = '".$CarID."'";
-  echo $query;
   $stmt = $db->prepare($query);
   $stmt->execute();
   $result = $stmt->fetch();
@@ -54,16 +51,24 @@
     $time = 3;
     
   $query = "SELECT PID from `Service Package` WHERE TimeSincePurchased = ".$time;
-  echo $query."\n";
   $stmt = $db->prepare($query);
   $stmt->execute();
   $result = $stmt->fetch();
   $PID = $result['PID'];
   
   //figure out pickupp date
+  $query = "Select sum(t.Time) as sum From Test t, PTask p Where p.PID = ".$PID." AND p.TestID = t.TestID";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $time = $result['sum'];
+  $query = "Select date_add('".$dropOff."', interval ".$time." hour) as pickup";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $pickup = $result['pickup'];
   
-  
-  $query = "INSERT INTO `".$apt_table."` SET ScheduledDropOff='".$service->SDropOff."', AppMadeDate= current_date, CID='".$CID."', CarID='".$CarID."', PID = ".$PID;
+  $query = "INSERT INTO `".$apt_table."` SET ScheduledDropOff='".$dropOff."', AppMadeDate= current_date, CID='".$CID."', CarID='".$CarID."', PID = ".$PID.", PickupDate = '".$pickup."'";
   echo $query;
   $stmt = $db->prepare($query);
   $result = $stmt->execute();
@@ -73,7 +78,8 @@
   {
       $user_arr = array(
         "status" => "Successful Appointment",
-        "AID" => $AID
+        "AID" => $AID,
+        "Pickup" => $pickup
         );
   }
   else
