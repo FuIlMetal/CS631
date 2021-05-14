@@ -1,9 +1,9 @@
 <?php
-
+/*
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
-
+*/
   include_once './config/database.php';
   include_once './objects/customer.php';
   include_once './objects/car.php';
@@ -28,6 +28,12 @@
   $car->year = $_POST["year"];
   
   $dropOff = $_POST["dropOff"];
+  //convert date to datetime
+  $query = "SELECT convert('".$dropOff."', datetime) AS newTime";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $dropOff = $result['newTime'];
   
   if(!$customer->checkIfExist())
   {
@@ -69,7 +75,6 @@
   $pickup = $result['pickup'];
   
   $query = "INSERT INTO `".$apt_table."` SET ScheduledDropOff='".$dropOff."', AppMadeDate= current_date, CID='".$CID."', CarID='".$CarID."', PID = ".$PID.", PickupDate = '".$pickup."'";
-  echo $query;
   $stmt = $db->prepare($query);
   $result = $stmt->execute();
   $AID = $db->lastInsertId();

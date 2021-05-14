@@ -16,9 +16,15 @@
   $AID = $_POST["AID"];
   $dropOff = $_POST["dropOff"];
   
+  //convert date to datetime
+  $query = "SELECT convert('".$dropOff."', datetime) AS newTime";
+  $stmt = $db->prepare($query);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $time = $result['newTime'];
   
   //update actual drop off
-  $query = "UPDATE `Service Appointment` SET ActualDropOff = '".$dropOff."' WHERE AID = ".$AID;
+  $query = "UPDATE `Service Appointment` SET ActualDropOff = '".$time."' WHERE AID = ".$AID;
   $stmt = $db->prepare($query);
   $stmt->execute();
   $result = $stmt->fetch();
@@ -28,13 +34,15 @@
   $stmt = $db->prepare($query);
   $stmt->execute();
   $result = $stmt->fetch();
-  $time = $result['TimeDiff'];
+  $ptime = $result['TimeDiff'];
   
-  $query = "SELECT addtime('".$dropOff."', '".$time."') AS newTime";
+
+  $query = "SELECT addtime('".$time."', '".$ptime."') AS newTime";
   $stmt = $db->prepare($query);
   $stmt->execute();
   $result = $stmt->fetch();
   $newTime = $result['newTime'];
+  
   
   $query = "UPDATE `Service Appointment` SET PickupDate = '".$newTime."' WHERE AID = ".$AID;
   $stmt = $db->prepare($query);
