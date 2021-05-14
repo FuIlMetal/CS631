@@ -393,7 +393,6 @@ INSERT INTO `Service Appointment` (`PickupDate`, `ActualDropoff`, `ScheduledDrop
 --
 
 INSERT INTO `PPart` (`PartID`, `PID`) VALUES
-(1, 1),
 (2, 1);# 2 rows affected.
 
 --
@@ -420,7 +419,7 @@ INSERT INTO `BillP` ( `PartID`, `AID`) VALUES
 --
 
 INSERT INTO `BillT` ( `TestID`, `AID`) VALUES
-(1, 1);# 1 row affected.
+(2, 1);# 1 row affected.
 
  
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;# MySQL returned an empty result set (i.e. zero rows).
