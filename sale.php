@@ -42,6 +42,7 @@
     $query = "Insert into Purchase Set DateOfPurchase = current_date, CID = ".$CID.", CarID = ".$car->CarID.", SalePrice = ".$SalePrice;
     $stmt = $db->prepare($query);
     $result = $stmt->execute();
+    $TID = $db->lastInsertId();
     if(result)
     {
       $user_arr = array(
