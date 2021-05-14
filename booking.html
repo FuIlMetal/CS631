@@ -1,0 +1,76 @@
+<html><style>
+body  {
+  background-color: #cccdcc;
+    font-style: oblique;
+	font-size: 25px;
+  line-height: 50px;
+}
+input[type=text], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=date], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.button{
+  width: 10%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<body>
+<center>
+<h2>Service Appointment Booking</h2>
+
+
+<form>
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" value=""><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname" value=""><br>
+  <label for="email">Email:</label><br>
+  <input type="text" id="email" name="email" value=""><br>
+  <label for="color">Car color:</label><br>
+  <input type="text" id="color" name="color" value=""><br>
+  <label for="make"> Car Made By:</label><br>
+  <input type="text" id="make" name="make" value=""><br>
+  <label for="model">Car Model:</label><br>
+  <input type="text" id="model" name="model" value=""><br>
+  <label for="year">Year:</label><br>
+  <input type="text" id="year" name="year" value=""><br>
+  <label for="dropOff">Drop off time:</label><br>
+  <input type="date" id="dropOff" name="dropOff" value=""><br>
+
+  <button type="button" class="button" onclick="book(this.form)">Submit</button>
+</form>
+<div id="response"></div>
+</center>
+<script type="text/javascript" src="./js/frontEnd.js"></script>
+</body>
+</html>
