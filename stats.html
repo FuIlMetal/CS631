@@ -36,11 +36,28 @@ div {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+table,
+table td {
+  border: 1px solid #cccccc;
+}
+
+td {
+  height: 80px;
+  width: 160px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+
+
 </style>
 <body>
 <div>
 <center>
 <h2>Sale Stats</h2>
+<h4><button type="button"><a href="Main.html">Main Page</a></button><br></h4>
 <form>
 <label for="startDate">Start Date:</label><br>
  <input type="date" id="startDate" name="startDate" value=""><br>
@@ -48,7 +65,10 @@ div {
  <input type="date" id="endDate" name="endDate" value=""><br>
 <button type="button" class="button" onclick="stats(this.form)">Submit</button>
 </form>
-<div id="response"></div>
+<div id="response">
+<table id="table">
+</table>
+</div>
 </center>
 </div>
 <script type="text/javascript" src="./js/frontEnd.js"></script>

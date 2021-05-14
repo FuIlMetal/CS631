@@ -1,4 +1,4 @@
-<?php
+ <?php
 
   class Service{
     private $conn;
@@ -92,7 +92,6 @@
       
       //get total cost of tests
       $query = "Select sum(t.LabourCost) as Cost FROM Test t, PTask pp Where pp.TestID = t.TestID AND pp.PID = ".$this->PID;
-      echo $query;
       $stmt = $this->conn->prepare($query);
       $stmt->execute();
       $result = $stmt->fetch();

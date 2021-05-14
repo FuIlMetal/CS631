@@ -1,9 +1,9 @@
 <?php
-
+/*
   ini_set('display_errors', 1);
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
-
+*/
   include_once './config/database.php';
  
   $database = new Database;
@@ -21,7 +21,9 @@
   $result = $stmt->execute();
   if(result)
   {
-    $user_arr = array();
+    $user_arr[]= array(
+    "status" => "Successful Select"
+    );
     while($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
       $user_arr[]=$row;
