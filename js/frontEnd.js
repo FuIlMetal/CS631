@@ -124,6 +124,7 @@ function stats(form)
         var cellC;
         var cellD;
         var cellE;
+        var CellF;
        
         row = table.insertRow(-1);
         
@@ -134,15 +135,18 @@ function stats(form)
         cellC = document.createElement("th");
         cellC.innerHTML = "Year";
         cellD = document.createElement("th");
-        cellD.innerHTML = "Count";
+        cellD.innerHTML = "Purchase Year";
         cellE = document.createElement("th");
-        cellE.innerHTML = "Profit";
+        cellE.innerHTML = "Count";
+        cellF = document.createElement("th");
+        cellF.innerHTML = "Profit";
         
         row.appendChild(cellA);
         row.appendChild(cellB);
         row.appendChild(cellC);
         row.appendChild(cellD);
         row.appendChild(cellE);
+        row.appendChild(cellF);
         
         
         for (var i=1; i<response.length; i++) {
@@ -154,19 +158,22 @@ function stats(form)
           cellC = document.createElement("td");
           cellD = document.createElement("td");
           cellE = document.createElement("td");
+          cellF = document.createElement("td");
           
           // (C3) KEY & VALUE
           cellA.innerHTML = response[i]["Make"];
           cellB.innerHTML = response[i]["Model"];
           cellC.innerHTML = response[i]["Year"];
-          cellD.innerHTML = response[i]["Count"];
-          cellE.innerHTML = response[i]["Profit"];
+          cellD.innerHTML = response[i]["DateOfPurchase"];
+          cellE.innerHTML = response[i]["Count"];
+          cellF.innerHTML = response[i]["Profit"];
           
           row.appendChild(cellA);
           row.appendChild(cellB);
           row.appendChild(cellC);
           row.appendChild(cellD);
           row.appendChild(cellE);
+          row.appendChild(cellF);
         
         }
         

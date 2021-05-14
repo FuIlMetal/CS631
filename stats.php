@@ -14,8 +14,8 @@
   $startDate = $_POST["startDate"];
   $endDate = $_POST["endDate"];
 
-  $query = "Select VT.Make, VT.Model, VT.Year, Count(*) as Count, sum(P.SalePrice-C.Cost) as Profit From Purchase as P, Car as C, `Vehicle Type` as VT 
-		Where P.DateOfPurchase >= '".$startDate."' AND P.DateOfPurchase <= '".$endDate."' and P.CarID = C.CarID and C.VID = VT.VID Group by VT.Model, VT.Make, VT.Year;";
+  $query = "Select VT.Make, VT.Model, VT.Year, P.DateOfPurchase, Count(*) as Count, sum(P.SalePrice-C.Cost) as Profit From Purchase as P, Car as C, `Vehicle Type` as VT 
+		Where P.DateOfPurchase >= '".$startDate."' AND P.DateOfPurchase <= '".$endDate."' and P.CarID = C.CarID and C.VID = VT.VID Group by VT.Model, VT.Make, VT.Year, P.DateOfPurchase;";
  
   $stmt = $db->prepare($query);
   $result = $stmt->execute();
