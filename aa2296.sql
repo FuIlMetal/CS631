@@ -33,7 +33,6 @@ SET time_zone = "+00:00";# MySQL returned an empty result set (i.e. zero rows).
 --
 
 CREATE TABLE IF NOT EXISTS `BillP` (
-  `BillID` int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `PartID` int(11) NOT NULL,
   `AID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;# MySQL returned an empty result set (i.e. zero rows).
@@ -46,7 +45,6 @@ CREATE TABLE IF NOT EXISTS `BillP` (
 --
 
 CREATE TABLE IF NOT EXISTS `BillT` (
-  `BillID` int(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `ServiceID` int(10) NOT NULL,
   `AID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;# MySQL returned an empty result set (i.e. zero rows).
@@ -146,12 +144,11 @@ CREATE TABLE IF NOT EXISTS `Service Package` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Task`
+-- Table structure for table `PPart`
 --
 
-CREATE TABLE IF NOT EXISTS `Task` (
-  `ServiceID` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `TestID` int(5) NOT NULL,
+CREATE TABLE IF NOT EXISTS `PPart` (
+  `PartID` int(11) NOT NULL,
   `AID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;# MySQL returned an empty result set (i.e. zero rows).
 
@@ -162,7 +159,6 @@ CREATE TABLE IF NOT EXISTS `Task` (
 --
 
 CREATE TABLE IF NOT EXISTS `PTask` (
-  `ServiceID` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `TestID` int(5) NOT NULL,
   `PID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;# MySQL returned an empty result set (i.e. zero rows).
@@ -245,10 +241,10 @@ ALTER TABLE `Service Appointment`
 
 
 --
--- Indexes for table `Task`
+-- Indexes for table `PPart`
 --
-ALTER TABLE `Task`
- ADD KEY `TestID` (`TestID`), ADD KEY `AID` (`AID`);# MySQL returned an empty result set (i.e. zero rows).
+ALTER TABLE `PPart`
+ ADD KEY `PartID` (`PartID`), ADD KEY `AID` (`AID`);# MySQL returned an empty result set (i.e. zero rows).
 
 
 --
@@ -273,7 +269,7 @@ ADD CONSTRAINT `BillP_ibfk_2` FOREIGN KEY (`AID`) REFERENCES `Service Appointmen
 -- Constraints for table `BillT`
 --
 ALTER TABLE `BillT`
-ADD CONSTRAINT `BillT_ibfk_1` FOREIGN KEY (`ServiceID`) REFERENCES `Task` (`ServiceID`),
+ADD CONSTRAINT `BillT_ibfk_1` FOREIGN KEY (`ServiceID`) REFERENCES `Test` (`TestID`),
 ADD CONSTRAINT `BillT_ibfk_2` FOREIGN KEY (`AID`) REFERENCES `Service Appointment` (`AID`);
 
 --
@@ -301,11 +297,11 @@ ADD CONSTRAINT `Service Appointment_ibfk_4` FOREIGN KEY (`CarID`) REFERENCES `Ca
 
 
 --
--- Constraints for table `Task`
+-- Constraints for table `PPart`
 --
-ALTER TABLE `Task`
-ADD CONSTRAINT `Task_ibfk_1` FOREIGN KEY (`TestID`) REFERENCES `Test` (`TestID`),
-ADD CONSTRAINT `Task_ibfk_2` FOREIGN KEY (`AID`) REFERENCES `Service Appointment` (`AID`);
+ALTER TABLE `PPart`
+ADD CONSTRAINT `PPart_ibfk_1` FOREIGN KEY (`PartID`) REFERENCES `Part` (`PartID`),
+ADD CONSTRAINT `PPart_ibfk_2` FOREIGN KEY (`AID`) REFERENCES `Service Appointment` (`AID`);
 
 --
 -- Constraints for table `PTask`
@@ -393,10 +389,10 @@ INSERT INTO `Service Appointment` (`PickupDate`, `ActualDropoff`, `ScheduledDrop
 
 
 --
--- Dumping data for table `Task`
+-- Dumping data for table `PPart`
 --
 
-INSERT INTO `Task` (`TestID`, `AID`) VALUES
+INSERT INTO `PPart` (`PartID`, `AID`) VALUES
 (1, 1),
 (2, 1);# 2 rows affected.
 
